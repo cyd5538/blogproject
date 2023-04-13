@@ -1,12 +1,21 @@
 "use client"
 import { useCallback, useState} from 'react';
 import {AiOutlineMenu} from 'react-icons/ai'
+
 import Avatar from '../Avatar'
 import MenuItem from './MenuItem';
+import { User } from '../types'
+import { signOut } from 'next-auth/react';
+
 import useLoginModel from '../hooks/useLoginModal';
 import useRegisterModal from '../hooks/useRegisterModal';
 
-const Usermenu = () => {
+
+interface UsermenuProps {
+  currentUser? : User | null;
+}
+
+const Usermenu:React.FC<UsermenuProps> = ({currentUser}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const LoginModal = useLoginModel()
@@ -15,6 +24,8 @@ const Usermenu = () => {
   const toggleOpen = useCallback(() => {
     setIsOpen((value) => !value);
   },[])
+
+  console.log(currentUser)
 
   return (
     <div className="relative">
@@ -32,10 +43,16 @@ const Usermenu = () => {
       {isOpen && (
         <div className='absolute rounded-xl shadow-md w-[40vw] md:w-60 bg-white overflow-hidden right-0 top-12 text-sm'>
           <div className='flex flex-col cursor-pointer'>
+            {currentUser ? 
+            <>
+              <MenuItem onClick={() => {}} label="My profile"/>
+              <MenuItem onClick={() => signOut()} label="Logout"/>
+            </> : 
             <>
               <MenuItem onClick={LoginModal.onOpen} label="login"/>
               <MenuItem onClick={RegisterModal.onOpen} label="Sign up"/>
-            </>
+            </>  
+            }
           </div>
         </div>
       )}
