@@ -1,6 +1,8 @@
+'use client';
+
+import { signIn } from "next-auth/react";
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
-
 
 interface OauthProps {
   title?: string;
@@ -13,7 +15,7 @@ const Oauth: React.FC<OauthProps> = ({ title }) => {
 
         className="flex items-center justify-center gap-4 border-2 p-2 rounded-full  border-green-900 cursor-pointer hover:shadow-md hover:border-black transition"
       >
-        <div>
+        <div onClick={() => signIn("google")}>
           <FcGoogle size={35} />
         </div>
       </div>
@@ -21,7 +23,7 @@ const Oauth: React.FC<OauthProps> = ({ title }) => {
 
         className="flex items-center justify-center gap-4 border-2 p-2 rounded-full  border-green-900 cursor-pointer hover:shadow-md hover:border-black transition"
       >
-        <div>
+        <div onClick={() => signIn("github")}>
           <AiFillGithub size={35} />
         </div>
       </div>

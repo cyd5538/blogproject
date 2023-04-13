@@ -27,6 +27,7 @@ const LoginModel = () => {
   const bodyContent = (
     <div className="flex flex-col gap-4">
       <LoginForm />
+      <Oauth />
     </div>
   );
   const footerContent = (

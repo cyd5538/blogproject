@@ -32,18 +32,22 @@ const LoginForm = () => {
       ...data,
       redirect: false,
     })
-    .then((callback) => {
-      setIsLoading(false);
-      if(callback?.ok){
-        toast.success("로그인 성공")
-        router.refresh()
-        loginModal.onClose();
-      }
-      
-      if(callback?.error){
-        toast.error(callback.error)
-      }
-    })
+      .then((callback) => {
+        setIsLoading(false);
+        if (callback && callback.ok) {
+          toast.success("로그인 성공");
+          router.refresh();
+          loginModal.onClose();
+        } else {
+          toast.error("로그인 실패");
+          console.log(callback?.error);
+        }
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        toast.error("로그인 실패");
+        console.log(error);
+      });
 
   }
   return (
