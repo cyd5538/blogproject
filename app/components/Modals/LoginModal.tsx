@@ -7,12 +7,10 @@ import useLoginModel from "../hooks/useLoginModal";
 import useRegisterModal from "../hooks/useRegisterModal";
 
 import Oauth from "../recycle/Oauth";
-import Button from "../recycle/Button";
-import Input from "../recycle/Input";
+import LoginForm from "../auth/LoginForm";
+
 
 const LoginModel = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const loginModal = useLoginModel();
@@ -28,19 +26,7 @@ const LoginModel = () => {
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
-      <Input
-        placeholder="Email"
-        onChange={(e) => setEmail(e.target.value)}
-        value={email}
-      />
-      <Input
-        placeholder="Password"
-        type="password"
-        onChange={(e) => setPassword(e.target.value)}
-        value={password}
-      />
-      <Oauth/>
-      <Button title="로그인" onClick={() => {}}/>
+      <LoginForm />
     </div>
   );
   const footerContent = (

@@ -56,7 +56,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit, title, body, f
               flex 
               items-center 
               justify-between 
-              p-10 
+              p-10
+              pb-2 
               rounded-t
               "
             >
@@ -80,7 +81,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit, title, body, f
             <div className="relative p-10 flex-auto">
               {body}
             </div>
-            <div className="flex flex-col gap-2 p-10">
+            <div className="flex flex-col gap-2 p-4">
               {footer}
             </div>
           </div>
