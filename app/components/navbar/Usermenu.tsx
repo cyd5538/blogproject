@@ -1,12 +1,13 @@
 "use client"
-import { useCallback, useState} from 'react';
+import { useCallback, useState, useEffect, useRef} from 'react';
 import {AiOutlineMenu} from 'react-icons/ai'
 
 import Avatar from '../Avatar'
 import MenuItem from './MenuItem';
 import { User } from '../types'
 import { signOut } from 'next-auth/react';
-
+import { useRouter } from "next/navigation";
+import Link from "next/link"
 import useLoginModel from '../hooks/useLoginModal';
 import useRegisterModal from '../hooks/useRegisterModal';
 
@@ -18,6 +19,9 @@ interface UsermenuProps {
 const Usermenu:React.FC<UsermenuProps> = ({currentUser}) => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const router = useRouter();
+  const modalRef = useRef<HTMLDivElement>(null);
+
   const LoginModal = useLoginModel()
   const RegisterModal = useRegisterModal()
 
@@ -25,8 +29,19 @@ const Usermenu:React.FC<UsermenuProps> = ({currentUser}) => {
     setIsOpen((value) => !value);
   },[])
 
-  console.log(currentUser)
-
+    
+    const handleClickOutside = (event: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+  
+    useEffect(() => {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    }, []);
   return (
     <div className="relative">
       <div className="flex flex-row items-center gap-3">
@@ -41,12 +56,17 @@ const Usermenu:React.FC<UsermenuProps> = ({currentUser}) => {
         </div>
       </div>
       {isOpen && (
-        <div className='absolute rounded-xl shadow-md w-[40vw] md:w-60 bg-white overflow-hidden right-0 top-12 text-sm'>
+        <div ref={modalRef} className='absolute z-10 rounded-xl shadow-md w-[40vw] md:w-60 bg-white overflow-hidden right-0 top-12 text-sm'>
           <div className='flex flex-col cursor-pointer'>
             {currentUser ? 
             <>
-              <MenuItem onClick={() => {}} label="My profile"/>
-              <MenuItem onClick={() => signOut()} label="Logout"/>
+              <Link href="/">
+                <MenuItem onClick={() => setIsOpen(false)} label="프로필 수정"/>
+              </Link>
+              <Link href="/post">
+                <MenuItem onClick={() => setIsOpen(false)} label="글 쓰기"/>
+              </Link>
+              <MenuItem onClick={() => signOut()} label="로그아웃"/>
             </> : 
             <>
               <MenuItem onClick={LoginModal.onOpen} label="login"/>

@@ -39,7 +39,7 @@ const LoginForm = () => {
           router.refresh();
           loginModal.onClose();
         } else {
-          toast.error("로그인 실패");
+          toast.error(callback?.error || "로그인 실패");
           console.log(callback?.error);
         }
       })
