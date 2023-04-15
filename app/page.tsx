@@ -1,9 +1,11 @@
+import AllPosts from "./components/post/AllPosts";
 
 
 export default function Home() {
-  return (
-   <div>
 
-   </div>
+  return (
+    <div>
+      <AllPosts />
+    </div>
   )
 }
