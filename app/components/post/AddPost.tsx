@@ -8,6 +8,15 @@ import axios, { AxiosError } from "axios";
 
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
+import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
+import Prism from 'prismjs';
+import 'prismjs/themes/prism.css';
+import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
+import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
+import 'tui-color-picker/dist/tui-color-picker.css';
+import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
+import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
+
 import Tag from "./tags";
 
 const AddPost = () => {
@@ -20,11 +29,11 @@ const AddPost = () => {
   const router = useRouter();
 
   const editorRef = createRef<Editor>()
-
+  const queryClient = useQueryClient()
   // create a post 
   const {mutate} = useMutation(
-    async () => await axios.post('/api/posts', {
-      content : value,
+    async (markdown : string | undefined) => await axios.post('/api/posts', {
+      content : markdown,
       title,
       tags : tags.map((tag) => tag.name)
     }),
@@ -36,6 +45,7 @@ const AddPost = () => {
         }
       },
       onSuccess: (data) => {
+        queryClient.invalidateQueries(["posts"])
         toast.success("성공")
         router.push('/')
       }
@@ -45,31 +55,9 @@ const AddPost = () => {
   const submitPost = async (e : React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    mutate()
+    const markdown = await editorRef?.current?.getInstance()?.getMarkdown();
+    mutate(markdown)
   }
-
-  const modules = {
-    syntax: false,
-    toolbar: [
-      ["bold", "italic", "underline", "strike"], // toggled buttons
-      ["blockquote", "code-block"],
-
-      [{ header: 1 }, { header: 2 }], // custom button values
-      [{ list: "ordered" }, { list: "bullet" }],
-      [{ script: "sub" }, { script: "super" }], // superscript/subscript
-      [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
-      [{ direction: "rtl" }], // text direction
-
-      [{ size: ["small", false, "large", "huge"] }], // custom dropdown
-      [{ header: [1, 2, 3, 4, 5, 6, false] }],
-
-      [{ color: [] }, { background: [] }], // dropdown with defaults from theme
-      [{ font: [] }],
-      [{ align: [] }],
-
-      ["clean"], // remove formatting button
-    ],
-  };
 
   function addTag() {
     if (!tag) {
@@ -103,9 +91,8 @@ const AddPost = () => {
     setTags(newTags);
   }
 
-
   return (
-    <form onSubmit={submitPost} className=" w-full h-screen p-4">
+    <form onSubmit={submitPost} className=" w-full h-screen p-4 text-black">
       <input
         className="border border-gray-300 p-2 rounded-md shadow-sm w-full"
         onChange={(e) => setTtile(e.target.value)}
@@ -135,19 +122,20 @@ const AddPost = () => {
       </form>
       <Editor
         ref={editorRef}
-        initialValue={value}
+        initialValue={''}
         onChange={(value) => setValue(value)}
-        // placeholder="내용을 입력해주세요."
-        previewStyle="vertical"
-        height="500px"
+        height="500px" 
+        useCommandShortcut={true}
+        usageStatistics={false}
+        plugins={[colorSyntax, [codeSyntaxHighlight, { highlighter: Prism }]]} 
         toolbarItems={[
           ['heading', 'bold', 'italic', 'strike'],
           ['hr', 'quote'],
           ['ul', 'ol', 'task', 'indent', 'outdent'],
           ['table', 'image', 'link'],
-          ['code', 'codeblock'],
+          ['code', 'codeblock']
         ]}
-      ></Editor>
+      />
       <div className="flex justify-end w-full">
         <button
           className="bg-zinc-700 hover:bg-zinc-900 w-full text-white font-bold py-2 px-4 rounded mt-4 "

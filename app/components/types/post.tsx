@@ -16,4 +16,5 @@ export type SinglePostType = {
     postId: string;
     userId: string;
   }[];
+  tags : string[];
 }
