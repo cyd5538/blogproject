@@ -1,4 +1,3 @@
-import { QueryClientProvider } from '@tanstack/react-query';
 import getCurrentUser from './actions/getCurrentUser';
 import LoginModel from './components/Modals/LoginModal';
 import RegisterModal from './components/Modals/RegisterModal';

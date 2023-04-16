@@ -1,7 +1,7 @@
 "use client"
 import React, { useCallback, useState, useEffect, createRef } from "react";
 import { toast } from "react-hot-toast";
-import { useRouter } from 'next/navigation';
+import { useSearchParams, useRouter  } from 'next/navigation';
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
@@ -20,13 +20,17 @@ import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
 import Tag from "./tags";
 
 const AddPost = () => {
-  const [title, setTtile] = useState("");
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const abc = searchParams?.get("title"); // value1
+  const def = searchParams?.get("content"); // value2
+
+  const [title, setTtile] = useState(abc ? abc : "");
   const [value, setValue] = useState("");
   const [tag, setTag] = useState("");
   const [tags, setTags] = useState<{ id: number; name: string }[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const router = useRouter();
 
   const editorRef = createRef<Editor>()
   const queryClient = useQueryClient()
@@ -122,7 +126,7 @@ const AddPost = () => {
       </form>
       <Editor
         ref={editorRef}
-        initialValue={''}
+        initialValue={def ? def : ""}
         onChange={(value) => setValue(value)}
         height="500px" 
         useCommandShortcut={true}
@@ -137,12 +141,21 @@ const AddPost = () => {
         ]}
       />
       <div className="flex justify-end w-full">
+        {abc ? 
         <button
           className="bg-zinc-700 hover:bg-zinc-900 w-full text-white font-bold py-2 px-4 rounded mt-4 "
           type="submit"
         >
-          제출
+          Update
         </button>
+        : 
+        <button
+          className="bg-zinc-700 hover:bg-zinc-900 w-full text-white font-bold py-2 px-4 rounded mt-4 "
+          type="submit"
+        >
+          Post
+        </button>
+       }
       </div>
       <p className="pb-8"></p>
     </form>

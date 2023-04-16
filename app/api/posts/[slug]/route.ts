@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
-import getCurrentUser from "@/app/actions/getCurrentUser";
 import prisma from "@/app/libs/prismadb";
+import getCurrentUser from "@/app/actions/getCurrentUser";
 
 interface IParams {
   postId?: string;
@@ -9,7 +9,6 @@ interface IParams {
 }
 
 export async function GET(request: Request, { params }: { params: IParams }) {
-  const { postId } = params;
 
   const listing = await prisma.post.findMany({
     where: {
@@ -26,3 +25,35 @@ export async function GET(request: Request, { params }: { params: IParams }) {
 
   return NextResponse.json(listing);
 }
+
+export async function DELETE(
+  request: Request, 
+  { params }: { params: IParams }
+) {
+  const currentUser = await getCurrentUser();
+
+  if (!currentUser) {
+    return NextResponse.error();
+  }
+
+  const post = await prisma.post.findMany({
+    where: {
+      id: params.slug,
+      userId: currentUser.id,
+    },
+  });
+
+  if (!post || post.length === 0) {
+    return NextResponse.error();
+  }
+
+  await prisma.post.deleteMany({
+    where: {
+      id: params.slug ,
+      userId: currentUser.id,
+    },
+  });
+
+  return NextResponse.json(post);
+}
+
