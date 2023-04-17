@@ -16,4 +16,5 @@ export type AllPostType = {
     userId: string;
   }[];
   tags : string[]
+  likedIds : string[]
 }

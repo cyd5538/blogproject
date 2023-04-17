@@ -1,7 +1,7 @@
 "use client"
 import React, { useState, useCallback } from "react";
 
-import Modal from "../recycle/Modal";
+import Modal from "../Modal";
 import useEditModel from "../hooks/useEditModal";
 import UserImageUpload from "../users/UserImageUpload";
 import { useMutation, useQueryClient } from "@tanstack/react-query";

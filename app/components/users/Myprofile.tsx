@@ -1,10 +1,13 @@
 "use client"
+
 import axios from "axios";
 import Avatar from "../Avatar";
 import useEditModel from "../hooks/useEditModal";
 import { User } from "../types";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
+import { formatDistanceToNowStrict } from "date-fns";
+import { ko } from "date-fns/locale";
 
 interface MyprofileProps {
   currentUser?: User | null | undefined;
@@ -27,13 +30,26 @@ const Myprofile: React.FC<MyprofileProps> = ({ currentUser }) => {
   if (error) return <div>error</div>
   if (isLoading) return <div>Loadding</div>
 
+  const formatDate = (dateString : string) => {
+    const date = new Date(dateString);
+    const formattedDate = date.toLocaleDateString("ko-KR", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+    return `${formattedDate} 가입`;
+  };
+
   return (
-    <div className="flex flex-col items-center py-10 space-y-5 sm:space-y-10">
+    <div className="flex flex-col items-center py-10 space-y-5 ">
       <div className="">
         <Avatar src={data?.image} width={200} height={200} />
       </div>
-      <div className="text-xl font-semibold">{data?.name}</div>
-      <div className="text-gray-500">{data?.email}</div>
+      <div className="flex flex-col items-center">
+        <div className="text-xl font-semibold ">{data?.name}</div>
+        <div className="text-gray-500 text-xl">{data?.email}</div>
+      </div>
+      <div className="text-gray-500 text-sm">{formatDate(data?.createdAt)}</div>
       {id === currentUser?.id && 
         <button 
         onClick={editmodal.onOpen} 

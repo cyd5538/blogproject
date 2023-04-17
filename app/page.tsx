@@ -1,13 +1,13 @@
-
+import getCurrentUser from "./actions/getCurrentUser";
 import Container from "./components/Container";
 import AllPosts from "./components/post/AllPosts";
 
 
-export default function Home() {
-
+export default async function Home() {
+  const currentUser = await getCurrentUser()
   return (
     <Container>
-      <AllPosts />
+      <AllPosts currentUserId={currentUser?.id}/>
     </Container>
   )
 }

@@ -3,13 +3,13 @@
 import React, { useState, useCallback } from "react";
 
 
-import Modal from "../recycle/Modal";
+import Modal from "../Modal";
 
 import useLoginModel from "../hooks/useLoginModal";
 import useRegisterModal from "../hooks/useRegisterModal";
 
 import RegisterForm from '../auth/RegisterForm'
-import Oauth from "../recycle/Oauth";
+import Oauth from "../Oauth";
 
 const RegisterModal = () => {
   const [isLoading, setIsLoading] = useState(false);

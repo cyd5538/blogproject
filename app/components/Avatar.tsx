@@ -11,7 +11,7 @@ const Avatar:React.FC<AvatarProps> = ({src,width,height}) => {
   return (
     <Image 
       className="rounded-full"
-      src={src || "/images/logo.png"}
+      src={src || "/images/profiles.png"}
       width={width}
       height={height}
       alt="Avatar"

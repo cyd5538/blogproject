@@ -61,6 +61,9 @@ const AddPost = () => {
     e.preventDefault();
     setIsLoading(true);
     const markdown = await editorRef?.current?.getInstance()?.getMarkdown();
+    if(!title){
+      return toast.error("제목을 입력해주세요")
+    }
     mutate(markdown)
   }
 
@@ -97,7 +100,7 @@ const AddPost = () => {
   }
 
   return (
-    <form onSubmit={submitPost} className=" w-full h-screen p-4 text-black">
+    <form onSubmit={submitPost} className=" w-full h-screen p-4 ">
       <input
         className="border border-gray-300 p-2 rounded-md shadow-sm w-full"
         onChange={(e) => setTtile(e.target.value)}
@@ -130,7 +133,6 @@ const AddPost = () => {
         initialValue={def ? def : ""}
         onChange={(value) => setValue(value)}
         height="500px" 
-        theme="dark"
         useCommandShortcut={true}
         usageStatistics={false}
         plugins={[colorSyntax, [codeSyntaxHighlight, { highlighter: Prism }]]} 

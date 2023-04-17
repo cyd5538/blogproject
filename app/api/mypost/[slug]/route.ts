@@ -20,6 +20,6 @@ export async function GET(request: Request, { params }: { params: IParams }) {
         createdAt: "desc",
       },
     });
-    console.log(params)
+
   return NextResponse.json(myPosts);
 }
