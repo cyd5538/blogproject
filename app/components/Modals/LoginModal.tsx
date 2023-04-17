@@ -1,7 +1,7 @@
 "use client"
 import React, { useState, useCallback } from "react";
 
-import Modal from "./Modal";
+import Modal from "../recycle/Modal";
 
 import useLoginModel from "../hooks/useLoginModal";
 import useRegisterModal from "../hooks/useRegisterModal";

@@ -45,7 +45,7 @@ const BlogPosts = () => {
         />
       )}
       <div className="flex items-center gap-2">
-        <Avatar src={data?.[0].user?.image} />
+        <Avatar src={data?.[0].user?.image} width={30} height={30}/>
         <div>
           <div className="text-sm text-gray-500">{data?.[0].user?.email}</div>
           <div className="text-sm font-medium text-gray-900">{data?.[0].user?.name}</div>

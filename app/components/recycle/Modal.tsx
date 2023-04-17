@@ -1,4 +1,5 @@
-import { useCallback } from "react";
+"use client";
+
 import { AiOutlineClose } from "react-icons/ai";
 
 interface ModalProps {
@@ -8,11 +9,10 @@ interface ModalProps {
   title?: string;
   body?: React.ReactElement;
   footer?: React.ReactElement;
-  actionLabel: string
   disabled?: boolean;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit, title, body, actionLabel, footer, disabled }) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit, title, body, footer, disabled }) => {
   
   if (!isOpen) {
     return null;
@@ -37,7 +37,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit, title, body, a
         "
       >
         <div className="relative w-full lg:w-3/6 my-6 mx-auto lg:max-w-3xl h-full lg:h-auto">
-          {/*content*/}
           <div className="
             h-full
             lg:h-auto
@@ -53,12 +52,12 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit, title, body, a
             focus:outline-none
             "
           >
-            {/*header*/}
             <div className="
               flex 
               items-center 
               justify-between 
-              p-10 
+              p-10
+              pb-2 
               rounded-t
               "
             >
@@ -79,12 +78,10 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit, title, body, a
                 <AiOutlineClose size={20} />
               </button>
             </div>
-            {/*body*/}
             <div className="relative p-10 flex-auto">
               {body}
             </div>
-            {/*footer*/}
-            <div className="flex flex-col gap-2 p-10">
+            <div className="flex flex-col gap-2 p-4">
               {footer}
             </div>
           </div>

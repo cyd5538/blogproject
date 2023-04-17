@@ -8,6 +8,7 @@ import axios, { AxiosError } from "axios";
 
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
+import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
 import Prism from 'prismjs';
 import 'prismjs/themes/prism.css';
@@ -129,6 +130,7 @@ const AddPost = () => {
         initialValue={def ? def : ""}
         onChange={(value) => setValue(value)}
         height="500px" 
+        theme="dark"
         useCommandShortcut={true}
         usageStatistics={false}
         plugins={[colorSyntax, [codeSyntaxHighlight, { highlighter: Prism }]]} 
