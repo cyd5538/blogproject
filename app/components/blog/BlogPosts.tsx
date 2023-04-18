@@ -1,10 +1,11 @@
 "use client"
+import { useMemo } from "react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { SinglePostType } from "../types/post";
 import { useParams } from 'next/navigation';
 import Avatar from "../Avatar";
-import Comment from "../post/Comment";
+import Comment from "./Comment";
 
 import Prism from 'prismjs';
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
@@ -33,7 +34,7 @@ const BlogPosts:React.FC<BlogPostsProps> = ({currentUser}) => {
   })
   if (error) return <div>error</div>
   if (isLoading) return <div>Loadding</div>
-
+  
   return (
     <div className="max-w-4xl mx-auto py-8 px-4">
       <h1 className="text-3xl font-bold mb-4">{data?.[0].title}</h1>
@@ -50,11 +51,13 @@ const BlogPosts:React.FC<BlogPostsProps> = ({currentUser}) => {
           plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
         />
       )}
-      <div className="flex items-center gap-2">
-        <Avatar src={data?.[0].user?.image} width={50} height={50}/>
-        <div>
-          <div className="text-lg text-gray-500">{data?.[0].user?.email}</div>
-          <div className="text-lg font-medium text-gray-900">{data?.[0].user?.name}</div>
+      <div className="flex items-center justify-between border-b-2 pb-2">
+        <div className="flex items-center gap-2">
+          <Avatar src={data?.[0].user?.image} width={50} height={50}/>
+          <div>
+            <div className="text-lg text-gray-500">{data?.[0].user?.email}</div>
+            <div className="text-lg font-medium text-gray-900">{data?.[0].user?.name}</div>
+          </div>
         </div>
       </div>
       <Comment 

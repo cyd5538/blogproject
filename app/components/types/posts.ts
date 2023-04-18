@@ -17,4 +17,5 @@ export type AllPostType = {
   }[];
   tags : string[]
   likedIds : string[]
+  commentCount : number
 }

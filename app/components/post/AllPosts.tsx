@@ -21,7 +21,7 @@ const AllPosts:React.FC<AllPostsProps> = ({currentUserId}) => {
     })
     if (error) return <div>error</div>
     if (isLoading) return <div>Loadding</div>
-    
+  console.log(data)
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
       {data && data.map((post) => (
@@ -38,6 +38,7 @@ const AllPosts:React.FC<AllPostsProps> = ({currentUserId}) => {
           userEmail={post?.user?.email}
           tags={post.tags}
           likeCount={post?.likedIds}
+          commentCount={post?.comments?.length}
         />
       ))}
     </div>
