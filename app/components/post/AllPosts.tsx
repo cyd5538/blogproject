@@ -1,8 +1,9 @@
 "use client"
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import AllPostsItem from "./AllPostsItem";
 import { AllPostType } from "../types/posts";
+import AllPostsItem from "./AllPostsItem";
+
 
 interface AllPostsProps {
   currentUserId? : string

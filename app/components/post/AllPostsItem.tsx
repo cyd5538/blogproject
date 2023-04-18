@@ -69,39 +69,41 @@ const AllPostsItem: React.FC<AllPostItemProps> = ({
   }, [createdAt])
 
   return (
-<div className="border rounded-md p-4 my-4 h-full flex flex-col justify-between">
-  <Link href={`/blog/${id}`}>
-    <h2 className="text-2xl font-bold mb-4 cursor-pointer hover:underline">{title}</h2>
-  </Link>
-  <div className="flex gap-2 flex-wrap">
-    {tags.map((tag) => (
-      <div
-        key={tag}
-        className="bg-blue-500 text-white rounded-md cursor-pointer px-2 py-1 mb-2"
-      >
-        {tag}
+    <div className="border rounded-md p-4 my-4 h-full flex flex-col justify-between bg-white shadow-md">
+      <Link href={`/blog/${id}`}>
+        <h2 className="text-2xl font-bold mb-4 cursor-pointer hover:underline text-gray-800">{title}</h2>
+      </Link>
+      <div className="flex gap-2 flex-wrap">
+        {tags.map((tag) => (
+          <div
+            key={tag}
+            className="bg-blue-500 text-white rounded-md cursor-pointer px-2 py-1 mb-2 text-sm"
+          >
+            {tag}
+          </div>
+        ))}
       </div>
-    ))}
-  </div>
-  <Link href={`/users/?id=${userId}`}>
-    <div className="flex items-center mt-4 gap-2 cursor-pointer">
-      <Avatar src={userImage} width={40} height={40}/>
-      <div className="flex flex-col">
-        <span className="text-gray-800 font-medium">{userName}</span>
-        <span className="text-gray-500 text-sm">{userEmail}</span>
+      <Link href={`/users/?id=${userId}`}>
+        <div className="flex items-center mt-4 gap-2 cursor-pointer">
+          <Avatar src={userImage} width={40} height={40}/>
+          <div className="flex flex-col">
+            <span className="text-gray-800 font-medium">{userName}</span>
+            <span className="text-gray-500 text-sm">{userEmail}</span>
+          </div>
+        </div>
+      </Link>
+      <div className="flex justify-between items-center mt-4">
+        <div className="text-gray-600 text-sm">{createdAtFnc} 전 작성</div>
+        <div className="flex items-center gap-2">
+          <div className="flex items-center bg-white border rounded-md px-2 py-1 text-sm">
+            <div className="mr-1">{likeCount.length}</div>
+            <div onClick={handleLike} className="text-gray-600 text-sm cursor-pointer">
+              {currentUserId && likeCount.includes(currentUserId) ? <AiFillHeart color="#fa2600" size={20}/> : <AiOutlineHeart size={20}/>}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </Link>
-  <div>
-    <div className="text-gray-600 text-sm mt-4">{createdAtFnc} 전 작성</div>
-    <div onClick={handleLike} className="text-gray-600 text-sm mt-4 cursor-pointer">
-      {currentUserId && likeCount.includes(currentUserId) ? <AiFillHeart color="#fa2600" size={20}/> : <AiOutlineHeart size={20}/>}
-    </div>
-    <div>{likeCount.length}</div>
-  </div>
-</div>
-
-
   )
 }
 

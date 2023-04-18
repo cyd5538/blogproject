@@ -15,6 +15,9 @@ export type SinglePostType = {
     id: string;
     postId: string;
     userId: string;
+    name: string
+    profileImage : string
+    content : string
   }[];
   tags : string[];
 }
