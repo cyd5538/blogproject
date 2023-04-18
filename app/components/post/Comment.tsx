@@ -2,11 +2,17 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState, useRef, useEffect, useCallback } from "react"
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { toast } from "react-hot-toast";
 
 import Avatar from "../Avatar";
+
 import { User } from "../types";
+import { formatDistanceToNowStrict } from 'date-fns';
+import { ko } from "date-fns/locale";
+import { AiOutlineDelete,AiOutlineEdit } from "react-icons/ai";
+
+import useLoginModel from "../hooks/useLoginModal";
 
 interface CommentProps {
   id: string | undefined;
@@ -22,36 +28,79 @@ interface CommentProps {
   currentUser : User | null;
 }
 
-async function commentPost(id:string | undefined, data:string) {
-  const response = await axios.post(`/api/comment/${id}`,{
-    content : data
-  });
+
+
+async function commentDelete(id:string | undefined) {
+  const response = await axios.delete(`/api/comment/${id}`);
   return response.data
 }
 
 const Comment:React.FC<CommentProps> = ({comment, currentUser, id}) => {
   const [comments, setComments] = useState("")
+  const [apiId, setApidId] = useState(id)
   const [isInitialRender, setIsInitialRender] = useState(true);
+  const [isEdit, setIsEdit] = useState(false);
   const queryClient = useQueryClient();
-
   const commentRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const commentPostMutation = useMutation({
-    mutationFn: () => commentPost(id,comments),
+  const loginModal = useLoginModel()
+  console.log(comment)
+  const {mutate} = useMutation(
+    async (id : string | undefined) => {
+      if (!isEdit) {
+        return await axios.post(`/api/comment/${apiId}`, {
+          content : comments,
+          userId: currentUser?.id, 
+          name: currentUser?.name, 
+          profileImage: currentUser?.image ? currentUser?.image : "/images/profiles.png"
+        })
+      } else {
+        return await axios.put(`/api/comment/${apiId}`, {
+          content : comments,
+        })
+      }
+    },
+    {
+      onError: (error) => {
+        if(error instanceof AxiosError) {
+          toast.error("다시 시도해주세요!");
+          console.log(AxiosError);
+        }
+        setIsEdit(false)
+      },
+      onSuccess: (data) => {
+        queryClient.invalidateQueries(["post"])
+        toast.success("성공")
+        setApidId(id)
+        setIsEdit(false)
+        setComments("")
+      }
+    }
+  )
+ 
+  const commentDeleteMutation = useMutation({
+    mutationFn: commentDelete,
     onSuccess: () => {
-      toast.success("댓글이 등록되었습니다");
+      toast.success("댓글 삭제 완료");
       queryClient.invalidateQueries({ queryKey: ["post"] });
-      setComments("")
     },
     onError: () => {
       toast.success("문제가 생겼습니다");
     },
-
   });
   
   const handleComment = useCallback((e : React.FormEvent) => {
     e.preventDefault()
-    commentPostMutation.mutate()
+    if(!currentUser){
+      toast.error("로그인이 필요합니다")
+      return loginModal.onOpen()
+    }
+    mutate(id)
+  },[comment])
+
+  const handleDleteComment = useCallback((id:string) => {
+    commentDeleteMutation.mutate(id)
   },[comment])
 
   useEffect(() => {
@@ -70,20 +119,42 @@ const Comment:React.FC<CommentProps> = ({comment, currentUser, id}) => {
     commentRefs.current = commentRefs.current.filter(ref => ref != null);
   }, [comment, commentRefs.current]);
 
+  // 몇분전 몇시간전
+  const formatDate = (dateString: string) => {
+    const now = new Date();
+    const date = new Date(dateString);
+    return formatDistanceToNowStrict(date, { locale: ko, addSuffix: true });
+  };
+
+  const onClick = (id : string) => {
+    inputRef?.current?.focus();
+    setIsEdit(true)
+    setApidId(id)
+  }
+
   return (
     <div className="mt-8 mb-4">
       <form onSubmit={handleComment} className="flex items-center">
         <input 
+        ref={inputRef}
         type="text" 
         className="flex-1 border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
         placeholder="댓글을 입력해주세요" 
         value={comments}
         onChange={(e) => setComments(e.target.value)}
         />
+        {isEdit ? 
+        <div className="flex gap-2">
+          <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white rounded-md py-2 px-4 text-sm ml-2 transition duration-200">수정</button>
+          <button onClick={() => setIsEdit(false)} type="submit" className="bg-blue-500 hover:bg-blue-600 text-white rounded-md py-2 px-4 text-sm transition duration-200">취소</button>
+        </div> 
+        :
         <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white rounded-md py-2 px-4 ml-2 transition duration-200">댓글</button>
+        } 
       </form>
       <div className="mt-4 space-y-4">
         {comment?.map((com, index) => (
+          
           <div 
           ref={(node) => (commentRefs.current[index] = node)}
           key={com?.id} 
@@ -96,14 +167,14 @@ const Comment:React.FC<CommentProps> = ({comment, currentUser, id}) => {
                   <Avatar src={com.profileImage} width={30} height={30}/>
                   <h3 className="text-lg font-medium">{com?.name}</h3>
                 </div>
-                <span className="text-gray-400 text-sm">{com?.createdAt}</span>
+                <span className="text-gray-400 text-sm ml-2">{formatDate(com?.createdAt)} 등록</span>
               </div>
               <div className="flex justify-between">
                 <p className="text-gray-700 text-lg mt-4">{com?.content}</p>
                 {currentUser?.id === com?.userId ?
                   <div className="flex gap-2">
-                    <button className="cursor-pointer text-sm">삭제</button>
-                    <button className="cursor-pointer text-sm">수정</button>
+                    <button onClick={() => handleDleteComment(com.id)} className="cursor-pointer text-sm"><AiOutlineDelete size={16}/></button>
+                    <button onClick={() => onClick(com?.id)} className="cursor-pointer text-sm"><AiOutlineEdit /></button>
                   </div>
                   : <></>
                 }

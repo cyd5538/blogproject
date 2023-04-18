@@ -33,7 +33,7 @@ const BlogPosts:React.FC<BlogPostsProps> = ({currentUser}) => {
   })
   if (error) return <div>error</div>
   if (isLoading) return <div>Loadding</div>
-  console.log(data?.[0].comments)
+
   return (
     <div className="max-w-4xl mx-auto py-8 px-4">
       <h1 className="text-3xl font-bold mb-4">{data?.[0].title}</h1>
@@ -62,6 +62,7 @@ const BlogPosts:React.FC<BlogPostsProps> = ({currentUser}) => {
         comment={data?.[0].comments} 
         currentUser={currentUser}
       />
+
     </div>
 
   )
