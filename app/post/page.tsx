@@ -1,5 +1,8 @@
+import dynamic from 'next/dynamic';
 import Container from '../components/Container';
-import AddPost from "../components/post/AddPost";
+const AddPost = dynamic(() =>  import("../components/post/AddPost"), {
+  ssr: false
+})
 
 export default async function Dashboard() {
 
