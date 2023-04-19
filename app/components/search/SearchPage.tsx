@@ -18,7 +18,7 @@ interface Post {
   content: string;
   likedIds: string[];
   tags: string[];
-  updatedAt: string;
+  createdAt: string;
   userId: string;
   user: User;
   comments: string[]
@@ -49,16 +49,16 @@ const SearchPage = () => {
   })
 
   useEffect(() => {
-    if(filter === ""){
+    if (filter === "") {
       setHasData(true);
     }
-  },[filter])
+  }, [filter])
 
   useEffect(() => {
-    if(filter){
+    if (filter) {
       localStorage.setItem("filter", filter);
     }
-  },[filter])
+  }, [filter])
 
   useEffect(() => {
     // 브라우저가 닫힐 때 로컬 스토리지의 값을 삭제
@@ -73,6 +73,7 @@ const SearchPage = () => {
       window.removeEventListener("unload", handleBeforeUnload);
     };
   }, []);
+  console.log(data)
   return (
     <Container>
       <div className="flex justify-center mt-4">
@@ -90,13 +91,23 @@ const SearchPage = () => {
         </div>
       </div>
       <div className='text-center mt-10'>
-      {!hasData && (
-            <div className="flex justify-center mt-2">
-              <p className="text-center text-gray-600">
-                검색 결과가 없습니다.
-              </p>
-            </div>
-      )}
+        {!hasData && filter !== "" ? (
+          <div className="w-full sm:w-3/4 text-left mx-auto mt-10">
+            <p className="text-3xl font-bold">
+              검색 결과가 없습니다.
+            </p>
+          </div>
+        )
+          :
+          <></>
+        }
+        {hasData && filter !== "" ? 
+          <div className="w-full sm:w-3/4 text-left mx-auto mt-10">
+            <h1 className="text-3xl font-bold">{filter} 검색결과</h1>
+            <p className="mt-2">총 {data?.length}개의 포스트</p>
+          </div>
+          : <></>
+        }
       </div>
       {hasData && (<div className='w-full sm:w-3/4 mx-auto mt-10'>
         {data?.map((res: Post) =>
@@ -106,7 +117,7 @@ const SearchPage = () => {
             title={res.title}
             content={res.content}
             likecount={res.likedIds.length}
-            updatedAt={res.updatedAt}
+            createdAt={res.createdAt}
             userId={res.userId}
             tags={res.tags}
             userName={res.user.name}

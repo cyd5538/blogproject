@@ -2,6 +2,9 @@
 
 import Link from "next/link";
 import Avatar from "../Avatar";
+import { useMemo } from "react";
+import { formatDistanceToNowStrict } from "date-fns";
+import { ko } from "date-fns/locale";
 
 interface SearchResultProps {
   id: string;
@@ -9,7 +12,7 @@ interface SearchResultProps {
   content: string;
   likecount: number
   tags: string[];
-  updatedAt: string;
+  createdAt: string;
   userId: string;
   userName: string;
   userImage: string;
@@ -23,15 +26,22 @@ const SearchResult: React.FC<SearchResultProps> = ({
   content,
   likecount,
   tags,
-  updatedAt,
+  createdAt,
   userId,
   userName,
   userImage,
   userEmail,
   comment
 }) => {
+  const createdAtFnc = useMemo(() => {
+    if (!createdAt) {
+      return null;
+    }
+    return formatDistanceToNowStrict(new Date(createdAt), { locale: ko });
+  }, [createdAt])
   return (
     <div className="border-b border-black pb-4 border-dotted mt-4">
+
       <div className="flex flex-row items-center space-x-4">
         <Link href={`/users?id=${userId}`}>
           <div className="w-20 h-20 rounded-full bg-gray-200 flex justify-center items-center cursor-pointer">
@@ -41,17 +51,23 @@ const SearchResult: React.FC<SearchResultProps> = ({
         <div className="text-gray-800">{userName}</div>
       </div>
       <div>
-        <h2 className="text-2xl font-bold text-gray-900 mt-2">{title}</h2>
+        <Link href={`/blog/${id}`}>
+          <h2 className="text-3xl mt-2 font-bold mb-4 cursor-pointer hover:underline ">
+            {title}
+          </h2>
+        </Link>
       </div>
       <ul className="mt-4">
         {tags?.map((tag) => (
-          <li key={tag} className="inline-block bg-gray-200 text-gray-800 text-sm py-1 px-2 rounded-full mr-2">
-            {tag}
-          </li>
+          <Link href={`/tags/?tag=${tag}`}>
+            <li key={tag} className="inline-block cursor-pointer bg-gray-200 text-gray-800 text-sm py-1 px-2 rounded-full mr-2">
+              {tag}
+            </li>
+          </Link>
         ))}
       </ul>
       <div className="flex flex-row items-center mt-4">
-        <div className="text-gray-500">{updatedAt}</div>
+        <div className="text-gray-500">{createdAtFnc} 전 작성</div>
         <div className="text-gray-500 ml-4">{comment.length}개의 댓글</div>
         <div className="text-gray-500 ml-4">{likecount}❤</div>
       </div>

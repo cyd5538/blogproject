@@ -4,7 +4,7 @@ import { useCallback, useMemo } from "react";
 import { formatDistanceToNowStrict } from "date-fns";
 import { ko } from "date-fns/locale";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import { AiFillHeart } from "react-icons/ai";
 import { toast } from "react-hot-toast";
 import Avatar from "../Avatar";
 import Link from "next/link";
@@ -79,12 +79,14 @@ const AllPostsItem: React.FC<AllPostItemProps> = ({
       </Link>
       <div className="flex gap-2 flex-wrap">
         {tags.map((tag) => (
-          <div
-            key={tag}
-            className="bg-zinc-800 text-white rounded-md cursor-pointer px-2 py-1 mb-2 text-sm"
-          >
-            {tag}
-          </div>
+          <Link href={`/tags/?tag=${tag}`}>
+            <div
+              key={tag}
+              className="bg-zinc-800 text-white rounded-md cursor-pointer px-2 py-1 mb-2 text-sm"
+            >
+              {tag}
+            </div>
+          </Link>
         ))}
       </div>
       <Link href={`/users/?id=${userId}`}>
