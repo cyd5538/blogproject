@@ -7,9 +7,9 @@ import axios from "axios";
 import { formatDistanceToNowStrict } from "date-fns";
 import { ko } from "date-fns/locale";
 import { toast } from "react-hot-toast";
-import { useRouter } from 'next/navigation';
-import { User } from "@prisma/client";
+
 import { useSearchParams } from "next/navigation";
+import { User } from "../types";
 
 
 

@@ -27,20 +27,22 @@ const Mypost:React.FC<MyPostProps> = ({currentUser}) => {
 
   return (
     <div>
-      <div className="">
+      {data ? 
+      <div className="text-zinc-800">
         총 {data?.length} 개의 글이 있습니다.
       </div>
+      : <></>}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-14 pb-6">
         {data?.map((post) => (
           <MypostItem 
-            currentUser={currentUser}
             key={post.id}
             title={post.title}
             createdAt={post.createdAt}
             tags={post.tags}
             id={post.id}
             content={post.content}
-          />
+            currentUser={currentUser}
+            />
         ))}
       </div>
     </div>

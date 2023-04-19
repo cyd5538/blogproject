@@ -71,7 +71,7 @@ const AllPostsItem: React.FC<AllPostItemProps> = ({
   }, [createdAt])
 
   return (
-    <div className="border rounded-md p-4 my-4 h-full flex flex-col justify-between bg-zinc-100 shadow-md">
+    <div className="border rounded-md p-4 my-4 h-full flex flex-col justify-between bg-zinc-100 shadow-lg">
       <Link href={`/blog/${id}`}>
         <h2 className="text-2xl font-bold mb-4 cursor-pointer hover:underline ">
           {title}
@@ -81,7 +81,7 @@ const AllPostsItem: React.FC<AllPostItemProps> = ({
         {tags.map((tag) => (
           <div
             key={tag}
-            className="bg-blue-400 text-white rounded-md cursor-pointer px-2 py-1 mb-2 text-sm"
+            className="bg-zinc-800 text-white rounded-md cursor-pointer px-2 py-1 mb-2 text-sm"
           >
             {tag}
           </div>
@@ -91,25 +91,25 @@ const AllPostsItem: React.FC<AllPostItemProps> = ({
         <div className="flex items-center mt-4 gap-2 cursor-pointer">
           <Avatar src={userImage} width={40} height={40} />
           <div className="flex flex-col">
-            <span className="text-purple-700 font-medium">{userName}</span>
+            <span className="text-zinc-800 font-medium">{userName}</span>
             <span className="text-gray-500 text-sm">{userEmail}</span>
           </div>
         </div>
       </Link>
       <div className="flex justify-between items-center mt-4">
-        <div className="text-gray-600 text-sm">{createdAtFnc} 전 작성</div>
+        <div className="text-zinc-800 text-sm">{createdAtFnc} 전 작성</div>
         <div className="flex items-center gap-2">
-          <div className="text-pink-700 font-bold">댓글 {commentCount}</div>
-          <div className="flex items-center bg-pink-200 border rounded-md px-2 py-1 text-sm">
+          <div className="text-zinc-800 font-bold">댓글 {commentCount}</div>
+          <div className="flex items-center bg-zinc-800 border rounded-md px-2 py-1 text-sm">
             <div className="mr-1">
               <AiFillHeart
-                color={currentUserId && likeCount.includes(currentUserId) ? "#ff0000" : "#8c8c8c"}
+                color={currentUserId && likeCount.includes(currentUserId) ? "#ff0000" : "#fff"}
                 size={20}
                 className="cursor-pointer"
                 onClick={handleLike}
               />
             </div>
-            <div className="text-gray-600 text-sm">{likeCount.length}</div>
+            <div className="text-white text-sm">{likeCount.length}</div>
           </div>
         </div>
       </div>
