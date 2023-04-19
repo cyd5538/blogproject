@@ -6,7 +6,7 @@ const Search = () => {
   return (
     <div className="relative">
       <div className="p-2 bg-rose-500 rounded-full text-white">
-        <Link href={`/posts/${1}`}>
+        <Link href={`/search`}>
            <BiSearch size={24} />
         </Link>
       </div>
