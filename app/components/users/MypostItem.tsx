@@ -8,6 +8,8 @@ import { formatDistanceToNowStrict } from "date-fns";
 import { ko } from "date-fns/locale";
 import { toast } from "react-hot-toast";
 import { useRouter } from 'next/navigation';
+import { User } from "@prisma/client";
+import { useSearchParams } from "next/navigation";
 
 
 
@@ -17,6 +19,7 @@ interface MypostItemProps {
   id: string
   tags?: string[]
   content: string
+  currentUser? : User | null;
 }
 
 async function deletePost(id: any) {
@@ -24,9 +27,9 @@ async function deletePost(id: any) {
   return response.data
 }
 
-const MypostItem: React.FC<MypostItemProps> = ({ title, createdAt, id, tags, content }) => {
-  const router = useRouter();
-
+const MypostItem: React.FC<MypostItemProps> = ({ title, createdAt, id, tags, content, currentUser }) => {
+  const searchParams = useSearchParams();
+  const ids = searchParams?.get('id');
   const queryClient = useQueryClient();
   const deletePostMutation = useMutation({
     mutationFn: deletePost,
@@ -61,9 +64,10 @@ const MypostItem: React.FC<MypostItemProps> = ({ title, createdAt, id, tags, con
         {tags?.map((a) => <li key={a} className="p-1 pl-2 pr-2 rounded-md bg-zinc-500 text-white">{a}</li>)}
       </ul>
       <div className="text-gray-600 mb-2">{createdAtFnc} 전 작성</div>
+      {ids === currentUser?.id ?
       <div className="flex justify-end space-x-2">
         <button onClick={() => handleDelete(id)} className="text-gray-600 hover:text-red-600">삭제</button>
-        <Link
+        {/* <Link
           href={{
             pathname: '/post',
             query: {
@@ -73,8 +77,10 @@ const MypostItem: React.FC<MypostItemProps> = ({ title, createdAt, id, tags, con
           }}
         >
           <button className="text-gray-600 hover:text-blue-600">수정</button>
-        </Link>
-    </div>
+        </Link> */}
+      </div>
+      : <></>
+      }
     </div >
   )
 }

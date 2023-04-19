@@ -66,11 +66,11 @@ const SearchPage = () => {
       localStorage.removeItem("filter");
     };
 
-    window.addEventListener("beforeunload ", handleBeforeUnload);
+    window.addEventListener("unload", handleBeforeUnload);
 
     // 컴포넌트 언마운트 시 이벤트 리스너 제거
     return () => {
-      window.removeEventListener("beforeunload ", handleBeforeUnload);
+      window.removeEventListener("unload", handleBeforeUnload);
     };
   }, []);
   return (

@@ -60,9 +60,6 @@ const Usermenu:React.FC<UsermenuProps> = ({currentUser}) => {
               <Link href={`/users?id=${currentUser?.id}`}>
                 <MenuItem onClick={() => setIsOpen(false)} label="프로필 수정"/>
               </Link>
-              <Link href="/mypost">
-                <MenuItem onClick={() => setIsOpen(false)} label="내 글 보기"/>
-              </Link>
               <Link href="/post">
                 <MenuItem onClick={() => setIsOpen(false)} label="글 쓰기"/>
               </Link>

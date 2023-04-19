@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { AllPostType } from "../types/posts";
 import MypostItem from "./MypostItem";
 import { User } from "../types";
+import { useSearchParams } from "next/navigation";
 
 
 const myPosts = async (id : string | undefined) => {
@@ -15,22 +16,24 @@ interface MyPostProps {
 }
 
 const Mypost:React.FC<MyPostProps> = ({currentUser}) => {
+  const searchParams = useSearchParams();
+  const id = searchParams?.get('id');
+
   const { data, error, isLoading } = useQuery<AllPostType[]>({
-    queryFn: () => myPosts(currentUser?.id),
-    queryKey: ["mypost", currentUser?.id],
+    queryFn: () => myPosts(id ? id : currentUser?.id),
+    queryKey: ["mypost"],
     })
     if (error) return <div>error</div>
-    if (isLoading) return <div>Loadding</div>
-    console.log(data)
+
   return (
     <div>
-      <div className="mt-6 w-full font-bold text-2xl text-purple-950 flex gap-2 justify-center">
-        <h1> 내 글 목록 </h1>
-        <p className="text-purple-600">{data?.length}</p>
+      <div className="">
+        총 {data?.length} 개의 글이 있습니다.
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-14">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-14 pb-6">
         {data?.map((post) => (
           <MypostItem 
+            currentUser={currentUser}
             key={post.id}
             title={post.title}
             createdAt={post.createdAt}
