@@ -93,7 +93,7 @@ const SearchPage = () => {
       <div className='text-center mt-10'>
         {!hasData && filter !== "" ? (
           <div className="w-full sm:w-3/4 text-left mx-auto mt-10">
-            <p className="text-3xl font-bold">
+            <p className="text-3xl font-bold dark:text-white">
               검색 결과가 없습니다.
             </p>
           </div>
@@ -103,8 +103,8 @@ const SearchPage = () => {
         }
         {hasData && filter !== "" ? 
           <div className="w-full sm:w-3/4 text-left mx-auto mt-10">
-            <h1 className="text-3xl font-bold">{filter} 검색결과</h1>
-            <p className="mt-2">총 {data?.length}개의 포스트</p>
+            <h1 className="text-3xl font-bold dark:text-white">{filter} 검색결과</h1>
+            <p className="mt-2 dark:text-white">총 {data?.length}개의 포스트</p>
           </div>
           : <></>
         }

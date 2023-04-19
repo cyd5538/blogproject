@@ -44,13 +44,13 @@ const RegisterForm = () => {
     <div className="flex flex-col gap-4">
       <form onSubmit={handleSubmit(onSubmit)} className="p-8 space-y-4">
         <div>
-          <label htmlFor="name" className="block mb-1 font-medium text-gray-700">
+          <label htmlFor="name" className="dark:text-white block mb-1 font-medium text-gray-700">
             Name
           </label>
           <input
             id="name"
             type="text"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+            className="dark:bg-zinc-700 dark:text-white w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
             {...register("name", { required: "이름을 입력해주세요" })}
           />
           {errors.name && (
@@ -58,13 +58,13 @@ const RegisterForm = () => {
           )}
         </div>
         <div>
-          <label htmlFor="email" className="block mb-1 font-medium text-gray-700">
+          <label htmlFor="email" className="dark:text-white block mb-1 font-medium text-gray-700">
             Email
           </label>
           <input
             id="email"
             type="email"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+            className="dark:bg-zinc-700 dark:text-white w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
             {...register("email", {
               required: "이메일을 입력해주세요",
               pattern: {
@@ -78,13 +78,13 @@ const RegisterForm = () => {
           )}
         </div>
         <div>
-          <label htmlFor="password" className="block mb-1 font-medium text-gray-700">
+          <label htmlFor="password" className="dark:text-white block mb-1 font-medium text-gray-700">
             Password
           </label>
           <input
             id="password"
             type="password"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+            className="dark:bg-zinc-700 dark:text-white w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
             {...register("password", {
               required: "비밀번호를 입력해주세요",
               minLength: { value: 6, message: "비밀번호는 최소 6글자 이상입니다" },

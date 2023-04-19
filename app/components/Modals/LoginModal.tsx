@@ -15,7 +15,7 @@ const LoginModel = () => {
 
   const loginModal = useLoginModel();
   const registModel = useRegisterModal();
-  
+
   const onToggle = useCallback(() => {
     if (isLoading) {
       return;
@@ -31,7 +31,7 @@ const LoginModel = () => {
     </div>
   );
   const footerContent = (
-    <div className="text-black text-center mt-4">
+    <div className="text-black text-center mt-4 dark:text-white">
       <p>
         회원이 아니십니까?
         <span

@@ -167,11 +167,11 @@ const Comment: React.FC<CommentProps> = ({ comment, currentUser, id }) => {
         />
         {isEdit ?
           <div className="flex gap-2">
-            <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white rounded-md py-2 px-4 text-sm ml-2 transition duration-200">수정</button>
-            <button onClick={() => setIsEdit(false)} type="submit" className="bg-blue-500 hover:bg-blue-600 text-white rounded-md py-2 px-4 text-sm transition duration-200">취소</button>
+            <button type="submit" className="bg-zinc-500 hover:bg-zinc-600 text-white rounded-md py-2 px-4 text-sm ml-2 transition duration-200">수정</button>
+            <button onClick={() => setIsEdit(false)} type="submit" className="bg-zinc-500 hover:bg-zinc-600 text-white rounded-md py-2 px-4 text-sm transition duration-200">취소</button>
           </div>
           :
-          <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white rounded-md py-2 px-4 ml-2 transition duration-200">댓글</button>
+          <button type="submit" className="bg-zinc-500 hover:bg-zinc-600 text-white rounded-md py-2 px-4 ml-2 transition duration-200">댓글</button>
         }
       </form>
       <div className="mt-4 space-y-4">
@@ -187,16 +187,16 @@ const Comment: React.FC<CommentProps> = ({ comment, currentUser, id }) => {
               <div className="flex items-center jurefstify-between">
                 <div className="flex gap-2">
                   <Avatar src={com.profileImage} width={30} height={30} />
-                  <h3 className="text-lg font-medium">{com?.name}</h3>
+                  <h3 className="text-lg dark:text-white font-medium">{com?.name}</h3>
                 </div>
-                <span className="text-gray-400 text-sm ml-2">{formatDate(com?.createdAt)} 등록</span>
+                <span className="text-gray-400 dark:text-white text-sm ml-2">{formatDate(com?.createdAt)} 등록</span>
               </div>
               <div className="flex justify-between">
-                <p className="text-gray-700 text-lg mt-4">{com?.content}</p>
+                <p className="text-gray-700 dark:text-white text-lg mt-4">{com?.content}</p>
                 {currentUser?.id === com?.userId ?
                   <div className="flex gap-2">
-                    <button onClick={() => handleDleteComment(com.id)} className="cursor-pointer text-sm"><AiOutlineDelete size={16} /></button>
-                    <button onClick={() => onClick(com?.id, com?.content)} className="cursor-pointer text-sm"><AiOutlineEdit /></button>
+                    <button onClick={() => handleDleteComment(com.id)} className="cursor-pointer text-sm dark:text-white"><AiOutlineDelete size={16} /></button>
+                    <button onClick={() => onClick(com?.id, com?.content)} className="cursor-pointer text-sm dark:text-white"><AiOutlineEdit /></button>
                   </div>
                   : <></>
                 }

@@ -19,6 +19,7 @@ import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-sy
 import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
 
 import Tag from "./tags";
+import useDarkMode from "../hooks/DarkmodeToggle";
 
 const AddPost = () => {
   const router = useRouter();
@@ -98,11 +99,19 @@ const AddPost = () => {
     const newTags = tags.filter((tag) => tag.id !== tagId);
     setTags(newTags);
   }
+  const [dark, setDark] = useState(false);
+  const handleDarkToggle = () => {
+    setDark(!dark);
+    console.log(dark)
+  };
+
+  const darkMode = useDarkMode()
+  const editorKey = darkMode.isOpen ? 'dark' : 'light';
 
   return (
     <form onSubmit={submitPost} className=" w-full h-screen p-4 ">
       <input
-        className="border border-gray-300 p-2 rounded-md shadow-sm w-full"
+        className="border border-gray-300 dark:bg-zinc-800 dark:border-zinc-950 dark:text-white p-2 rounded-md shadow-sm w-full"
         onChange={(e) => setTtile(e.target.value)}
         placeholder="title"
         type="text"
@@ -110,7 +119,7 @@ const AddPost = () => {
       />
       <form className="pt-2 pb-2">
         <input
-          className="border border-gray-300 p-2 rounded-md shadow-sm w-full"
+          className="border border-gray-300 dark:bg-zinc-800 dark:border-zinc-950 dark:text-white p-2 rounded-md shadow-sm w-full"
           onChange={(e) => setTag(e.target.value)}
           placeholder="태그를 써주시고 엔터를 누르세요"
           type="text"
@@ -128,14 +137,17 @@ const AddPost = () => {
           ))}
         </ul>
       </form>
+
       <Editor
+        key={editorKey} 
         ref={editorRef}
         initialValue={def ? def : ""}
         onChange={(value) => setValue(value)}
         height="500px" 
         useCommandShortcut={true}
         usageStatistics={false}
-        plugins={[colorSyntax, [codeSyntaxHighlight, { highlighter: Prism }]]} 
+        plugins={[colorSyntax, [codeSyntaxHighlight, { highlighter: Prism }]]}
+        theme={darkMode.isOpen ? "dark" : ""}
         toolbarItems={[
           ['heading', 'bold', 'italic', 'strike'],
           ['hr', 'quote'],
@@ -154,7 +166,7 @@ const AddPost = () => {
         </button>
         : 
         <button
-          className="bg-zinc-700 hover:bg-zinc-900 w-full text-white font-bold py-2 px-4 rounded mt-4 "
+          className="bg-zinc-900 hover:bg-zinc-950 w-full text-white font-bold py-2 px-4 rounded mt-4 "
           type="submit"
         >
           Post

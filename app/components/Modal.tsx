@@ -34,13 +34,15 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit, title, body, f
           focus:outline-none
           bg-neutral-800
           bg-opacity-70
+          
         "
       >
-        <div className="relative w-full lg:w-3/6 my-6 mx-auto lg:max-w-3xl h-full lg:h-auto">
+        <div className="relative w-full lg:w-3/6 my-6 mx-auto lg:max-w-3xl h-full lg:h-auto ">
           <div className="
             h-full
             lg:h-auto
             border-0 
+            dark:bg-zinc-800
             rounded-lg 
             shadow-lg 
             relative 
@@ -61,7 +63,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit, title, body, f
               rounded-t
               "
             >
-              <h3 className="text-3xl font-semibold text-black">
+              <h3 className="text-3xl font-semibold text-black  dark:text-white">
                 {title}
               </h3>
               <button
@@ -70,6 +72,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit, title, body, f
                   ml-auto
                   border-0 
                   text-black 
+                  dark:text-white
                   hover:opacity-70
                   transition
                 "

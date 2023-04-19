@@ -15,7 +15,7 @@ export default async function RootLayout({
 
   return (
     <html lang="ko">
-      <body className='w-full h-screen '>
+      <body className='w-full h-screen dark:bg-zinc-800'>
         <QueryWrapper>
           <LoginModel />
           <RegisterModal />

@@ -16,6 +16,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
         px-4 
         py-3 
         hover:bg-neutral-100 
+        dark:hover:bg-zinc-700 
         transition
         font-semibold
       "

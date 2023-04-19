@@ -28,7 +28,7 @@ const Mypost:React.FC<MyPostProps> = ({currentUser}) => {
   return (
     <div>
       {data ? 
-      <div className="text-zinc-800">
+      <div className="text-zinc-800 dark:text-white">
         총 {data?.length} 개의 글이 있습니다.
       </div>
       : <></>}

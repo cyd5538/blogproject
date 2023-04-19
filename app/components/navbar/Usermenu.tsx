@@ -43,7 +43,7 @@ const Usermenu:React.FC<UsermenuProps> = ({currentUser}) => {
       };
     }, []);
   return (
-    <div className="relative">
+    <div className="relative ">
       <div className="flex flex-row items-center gap-3">
         <div
           onClick={toggleOpen}
@@ -53,7 +53,7 @@ const Usermenu:React.FC<UsermenuProps> = ({currentUser}) => {
         </div>
       </div>
       {isOpen && (
-        <div ref={modalRef} className='absolute z-10 rounded-xl shadow-md w-[40vw] md:w-60 bg-white overflow-hidden right-0 top-12 text-sm'>
+        <div ref={modalRef} className='absolute z-10 rounded-xl shadow-md w-[40vw] md:w-60 bg-white dark:bg-zinc-900 dark:text-white overflow-hidden right-0 top-12 text-sm'>
           <div className='flex flex-col cursor-pointer'>
             {currentUser ? 
             <>

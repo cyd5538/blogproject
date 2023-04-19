@@ -19,7 +19,7 @@ interface MypostItemProps {
   id: string
   tags?: string[]
   content: string
-  currentUser? : User | null;
+  currentUser?: User | null;
 }
 
 async function deletePost(id: any) {
@@ -45,7 +45,7 @@ const MypostItem: React.FC<MypostItemProps> = ({ title, createdAt, id, tags, con
   const handleDelete = (id: any) => {
     deletePostMutation.mutate(id)
   }
-  
+
   const createdAtFnc = useMemo(() => {
     if (!createdAt) {
       return null;
@@ -56,18 +56,21 @@ const MypostItem: React.FC<MypostItemProps> = ({ title, createdAt, id, tags, con
 
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-4">
+    <div className="bg-white rounded-lg shadow-lg p-4 dark:bg-zinc-900">
       <Link href={`/blog/${id}`} >
-        <h2 className="text-xl font-semibold text-gray-800 mb-4 hover:text-gray-400 hover:underline">{title}</h2>
+        <h2 className="text-xl font-semibold text-gray-800 mb-4 hover:text-gray-400 dark:text-white hover:underline">{title}</h2>
       </Link>
       <ul className="text-gray-600 mb-2 flex gap-2">
-        {tags?.map((a) => <li key={a} className="p-1 pl-2 pr-2 rounded-md bg-zinc-500 text-white">{a}</li>)}
+        {tags?.map((a) =>
+          <Link href={`/tags?tag=${a}`} key={a}>
+            <li className="p-1 pl-2 pr-2 rounded-md cursor-pointer bg-zinc-500 dark:text-white text-white">{a}</li></Link>
+        )}
       </ul>
-      <div className="text-gray-600 mb-2">{createdAtFnc} 전 작성</div>
+      <div className="text-gray-600 mb-2 dark:text-white">{createdAtFnc} 전 작성</div>
       {ids === currentUser?.id ?
-      <div className="flex justify-end space-x-2">
-        <button onClick={() => handleDelete(id)} className="text-gray-600 hover:text-red-600">삭제</button>
-        {/* <Link
+        <div className="flex justify-end space-x-2">
+          <button onClick={() => handleDelete(id)} className="text-gray-600 dark:text-white hover:text-red-600">삭제</button>
+          {/* <Link
           href={{
             pathname: '/post',
             query: {
@@ -78,8 +81,8 @@ const MypostItem: React.FC<MypostItemProps> = ({ title, createdAt, id, tags, con
         >
           <button className="text-gray-600 hover:text-blue-600">수정</button>
         </Link> */}
-      </div>
-      : <></>
+        </div>
+        : <></>
       }
     </div >
   )

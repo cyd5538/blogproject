@@ -44,8 +44,8 @@ const Tags = () => {
       {data ? 
       <>
         <div className="w-full sm:w-3/4 text-left mx-auto mt-10">
-          <h1 className="text-3xl font-bold"># {id}</h1>
-          <p className="mt-2">총 {data?.length}개의 포스트</p>  
+          <h1 className="text-3xl font-bold dark:text-white"># {id}</h1>
+          <p className="mt-2 dark:text-white">총 {data?.length}개의 포스트</p>  
         </div>
         <div className='w-full sm:w-3/4 mx-auto mt-10'>
           {data?.map((res: Post) =>

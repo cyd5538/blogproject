@@ -13,7 +13,7 @@ const Oauth: React.FC<OauthProps> = ({ title }) => {
     <div className="w-full text-center flex justify-center gap-4 mt-2">
       <div
 
-        className="flex items-center justify-center gap-4 border-2 p-2 rounded-full  border-green-900 cursor-pointer hover:shadow-md hover:border-black transition"
+        className="bg-white dark:bg-zinc-900 flex items-center justify-center gap-4  p-2 rounded-full cursor-pointer hover:shadow-md  transition"
       >
         <div onClick={() => signIn("google")}>
           <FcGoogle size={35} />
@@ -21,7 +21,7 @@ const Oauth: React.FC<OauthProps> = ({ title }) => {
       </div>
       <div
 
-        className="flex items-center justify-center gap-4 border-2 p-2 rounded-full  border-green-900 cursor-pointer hover:shadow-md hover:border-black transition"
+        className="bg-white dark:bg-zinc-900 flex items-center justify-center gap-4  p-2 rounded-full cursor-pointer hover:shadow-md  transition"
       >
         <div onClick={() => signIn("github")}>
           <AiFillGithub size={35} />

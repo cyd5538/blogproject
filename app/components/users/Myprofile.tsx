@@ -42,15 +42,15 @@ const Myprofile: React.FC<MyprofileProps> = ({ currentUser }) => {
 
   return (
     <div>
-      <div className="flex flex-col items-center py-10 space-y-5 ">
+      <div className="flex flex-col items-center py-10 space-y-5 dark:text-white">
         <div className="">
           <Avatar src={data?.image} width={200} height={200} />
         </div>
         <div className="flex flex-col items-center">
-          <div className="text-xl font-semibold ">{data?.name}</div>
-          <div className="text-gray-500 text-xl">{data?.email}</div>
+          <div className="text-xl font-semibold  dark:text-white">{data?.name}</div>
+          <div className="text-gray-500 text-xl dark:text-white">{data?.email}</div>
         </div>
-        <div className="text-gray-500 text-sm">{formatDate(data?.createdAt)}</div>
+        <div className="text-gray-500 text-sm dark:text-white">{formatDate(data?.createdAt)}</div>
         {id === currentUser?.id &&
           <button
             onClick={editmodal.onOpen}
@@ -59,7 +59,7 @@ const Myprofile: React.FC<MyprofileProps> = ({ currentUser }) => {
           </button>
         }
       </div>
-      <div className="mt-6 w-full font-bold text-2xl text-zinc-950 flex gap-2 justify-start mb-2">
+      <div className="mt-6 w-full font-bold text-2xl dark:text-white text-zinc-950 flex gap-2 justify-start mb-2">
         <h1> {data?.name} 글 목록 </h1>
       </div>
     </div>
