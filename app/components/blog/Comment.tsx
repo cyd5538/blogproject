@@ -183,7 +183,7 @@ const Comment: React.FC<CommentProps> = ({ comment, currentUser, id }) => {
             className="flex space-x-4">
             <div className="flex-shrink-0">
             </div>
-            <div className="flex-1 border rounded-md px-4 py-2">
+            <div className="flex-1 dark:bg-zinc-700 bg-zinc-100 rounded-md px-4 py-2">
               <div className="flex items-center jurefstify-between">
                 <div className="flex gap-2">
                   <Avatar src={com.profileImage} width={30} height={30} />

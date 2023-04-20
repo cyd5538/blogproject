@@ -41,7 +41,6 @@ const SearchResult: React.FC<SearchResultProps> = ({
   }, [createdAt])
   return (
     <div className="border-b border-black dark:border-white pb-4 border-dotted mt-4">
-
       <div className="flex flex-row items-center space-x-4">
         <Link href={`/users?id=${userId}`}>
           <div className="w-20 h-20 rounded-full bg-gray-200 flex justify-center items-center cursor-pointer">

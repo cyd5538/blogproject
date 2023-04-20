@@ -16,6 +16,7 @@ import '@toast-ui/editor/dist/toastui-editor.css';
 import 'prismjs/themes/prism.css';
 import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
 import Link from "next/link";
+import BlogPostsSkeleton from "./BlogPostsSkeleton";
 
 interface BlogPostsProps {
   currentUser : User | null;
@@ -34,7 +35,7 @@ const BlogPosts:React.FC<BlogPostsProps> = ({currentUser}) => {
     queryFn: () => Posts(params?.slug),
   })
   if (error) return <div>error</div>
-  if (isLoading) return <div>Loadding</div>
+  if (isLoading) return <div><BlogPostsSkeleton /></div>
   
   return (
     <div className="max-w-4xl mx-auto py-8 px-4 ">

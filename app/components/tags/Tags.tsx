@@ -4,6 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import SearchResult from "../search/SearchResult";
+import AllPostItemSkeleton from "../post/AllPostItemSkeleton";
+import SearchResultSkeleton from "../search/SearchResultSkeleton";
 
 
 interface User {
@@ -34,10 +36,12 @@ const Tags = () => {
   const searchParams = useSearchParams();
   const id = searchParams?.get('tag');
 
-  const { data } = useQuery<Post[]>({
+  const { data, error, isLoading } = useQuery<Post[]>({
     queryKey: ['search', id],
     queryFn: () => allPosts(id as string),
   })
+  if (error) return <div>error</div>
+  if (isLoading) return <SearchResultSkeleton />
 
   return (
     <div>

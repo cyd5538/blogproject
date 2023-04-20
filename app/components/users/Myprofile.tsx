@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 import { formatDistanceToNowStrict } from "date-fns";
 import { ko } from "date-fns/locale";
+import MypostSkeleton from "./MypostSkeleton";
 
 interface MyprofileProps {
   currentUser?: User | null | undefined;
@@ -28,7 +29,7 @@ const Myprofile: React.FC<MyprofileProps> = ({ currentUser }) => {
     queryKey: ["user"],
   })
   if (error) return <div>error</div>
-  if (isLoading) return <div>Loadding</div>
+  if (isLoading) return <div><MypostSkeleton /></div>
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);

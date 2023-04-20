@@ -3,6 +3,7 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { AllPostType } from "../types/posts";
 import AllPostsItem from "./AllPostsItem";
+import AllPostItemSkeleton from "./AllPostItemSkeleton";
 
 
 interface AllPostsProps {
@@ -20,7 +21,11 @@ const AllPosts:React.FC<AllPostsProps> = ({currentUserId}) => {
     queryKey: ["posts"],
     })
     if (error) return <div>error</div>
-    if (isLoading) return <div>Loadding</div>
+    if (isLoading) return <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 gap-y-8 pb-8">
+    {[1,2,3,4,5,6,7,8,9].map(a => <AllPostItemSkeleton key={a}/>)}
+    </div>
+
+ 
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 gap-y-8 pb-8">

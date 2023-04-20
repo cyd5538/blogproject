@@ -35,7 +35,7 @@ const SearchPage = () => {
   const [hasData, setHasData] = useState(false);
   const queryClient = new QueryClient()
 
-  const { data, refetch } = useQuery<Post[]>({
+  const { data, refetch, } = useQuery<Post[]>({
     queryKey: ['search', filter],
     queryFn: () => allPosts(filter),
     enabled: !!filter,
@@ -73,7 +73,7 @@ const SearchPage = () => {
       window.removeEventListener("unload", handleBeforeUnload);
     };
   }, []);
-  console.log(data)
+  
   return (
     <Container>
       <div className="flex justify-center mt-4">
