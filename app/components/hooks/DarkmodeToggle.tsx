@@ -7,7 +7,7 @@ interface DarkModeStore {
 }
 
 const useDarkMode = create<DarkModeStore>((set) => ({
-    isOpen: localStorage.getItem('darkMode') === 'true' ? true : false,
+    isOpen: typeof localStorage !== 'undefined' && localStorage.getItem('darkMode') === 'true' ? true : false,
     onOpen : () => set({ isOpen: true}),
     onClose : () => set({ isOpen: false})
 }))
