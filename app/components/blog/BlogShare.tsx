@@ -33,15 +33,15 @@ const BlogShare:React.FC<BlogShareProps> = ({title}) => {
           imageUrl: "",
           description: "",
           link: {
-            mobileWebUrl: `http://localhost:3000/post/${params?.slug}`,
-            webUrl: `http://localhost:3000/post/${params?.slug}`,
+            mobileWebUrl: `https://jscotemaster.vercel.app/blog/${params?.slug}`,
+            webUrl: `https://jscotemaster.vercel.app/blog/${params?.slug}`,
           },
         },
         buttons: [
           {
-            title: `http://localhost:3000/post/${params?.slug}`,
+            title: `https://jscotemaster.vercel.app/blog/${params?.slug}`,
             link: {
-              mobileWebUrl: `http://localhost:3000/post/${params?.slug}`,
+              mobileWebUrl: `https://jscotemaster.vercel.app/blog/${params?.slug}`,
             },
           },
         ],
@@ -50,7 +50,7 @@ const BlogShare:React.FC<BlogShareProps> = ({title}) => {
   };
 
   const twiiterShare = () => {
-    let twitterUrl = `https://twitter.com/intent/tweet?url=http://localhost:3000/post/${params?.slug}`;
+    let twitterUrl = `https://twitter.com/intent/tweet?url=https://jscotemaster.vercel.app/blog/${params?.slug}`;
     window.open(twitterUrl, "_blank")
   }
 
