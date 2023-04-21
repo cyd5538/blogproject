@@ -55,7 +55,7 @@ const BlogShare:React.FC<BlogShareProps> = ({title}) => {
   }
 
   return (
-    <div className="mb-6 flex gap-2 w-full justify-end mt-4">
+    <div className="mb-6 flex gap-4 w-full justify-end mt-4">
       <div
         onClick={handleShareButtonClick}
         className="flex bg-yellow-400 items-center justify-center gap-4 p-[4px] rounded-full cursor-pointer shadow-md hover:shadow-xl transition"

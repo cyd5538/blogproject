@@ -58,17 +58,17 @@ const BlogPosts:React.FC<BlogPostsProps> = ({currentUser}) => {
         />
       )}
       </div>
-      <div className="flex items-center justify-between border-b-2 pb-2">
-        <div className="flex items-center gap-2">
-          <Avatar src={data?.[0].user?.image} width={50} height={50}/>
-          <div>
-            <div className="text-lg text-gray-500 dark:text-white">{data?.[0].user?.email}</div>
-            <div className="text-lg font-medium text-gray-900 dark:text-white">{data?.[0].user?.name}</div>
+      <div className="flex items-center justify-between border-b-2 pb-2 pt-4">
+        <div className="flex justify-between gap-2 w-full">
+          <div className="flex items-center gap-2">
+            <Avatar src={data?.[0].user?.image} width={50} height={50}/>
+            <div>
+              <div className="text-lg text-gray-500 dark:text-white">{data?.[0].user?.email}</div>
+              <div className="text-lg font-medium text-gray-900 dark:text-white">{data?.[0].user?.name}</div>
+            </div>
           </div>
+          <BlogShare title={data?.[0].title}/>
         </div>
-      </div>
-      <div>
-        <BlogShare title={data?.[0].title}/>
       </div>
       <Comment 
         id={data?.[0].id}

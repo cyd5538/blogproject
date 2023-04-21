@@ -1,7 +1,7 @@
 "use client"
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import useDarkMode from "../hooks/DarkmodeToggle";
-import { BsSun } from "react-icons/bs";
+import { BsFillSunFill } from "react-icons/bs";
 import { MdDarkMode } from "react-icons/md";
 
 const DarkMode = () => {
@@ -21,13 +21,30 @@ const DarkMode = () => {
     }
   };
 
+  useEffect(() => {
+    const localStorageKey = 'darkMode';
+    const isDarkMode = localStorage.getItem(localStorageKey) === 'true';
+    if (isDarkMode) {
+      const html = document.documentElement;
+      html.classList.add('dark');
+    }
+  }, []);
+  
   return (
-    <div>
-      <button onClick={toggleDarkMode}>
+    <div className="flex items-center justify-center">
+      <button 
+      onClick={toggleDarkMode}
+      >
       {DarkToggle.isOpen ? 
-      <MdDarkMode size={30} onClick={DarkToggle.onClose}/>
+        <p 
+        className="p-2 bg-purple-900 text-yellow-400 rounded-full">
+          <BsFillSunFill size={20} onClick={DarkToggle.onClose}/>
+        </p>
       :
-      <BsSun size={30} onClick={DarkToggle.onOpen}/> 
+        <p 
+        className="p-2 bg-black text-yellow-400 rounded-full">
+          <MdDarkMode size={20} onClick={DarkToggle.onOpen}/>
+        </p> 
       }
       </button>
     </div>

@@ -4,10 +4,10 @@ import Link from 'next/link'
 
 const Search = () => {
   return (
-    <div className="relative">
+    <div>
       <div className="p-2 bg-zinc-700 rounded-full text-white dark:bg-zinc-800">
         <Link href={`/search`}>
-           <BiSearch size={24} />
+           <BiSearch size={20} />
         </Link>
       </div>
     </div>
