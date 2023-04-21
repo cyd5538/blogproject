@@ -56,18 +56,24 @@ const SearchPage = () => {
 
   useEffect(() => {
     if (filter) {
-      localStorage.setItem("filter", filter);
+      // 클라이언트 사이드에서만 localStorage 사용
+      if (typeof window !== "undefined") {
+        localStorage.setItem("filter", filter);
+      }
     }
-  }, [filter])
-
+  }, [filter]);
+  
   useEffect(() => {
     // 브라우저가 닫힐 때 로컬 스토리지의 값을 삭제
     const handleBeforeUnload = () => {
-      localStorage.removeItem("filter");
+      // 클라이언트 사이드에서만 localStorage 사용
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("filter");
+      }
     };
-
+  
     window.addEventListener("unload", handleBeforeUnload);
-
+  
     // 컴포넌트 언마운트 시 이벤트 리스너 제거
     return () => {
       window.removeEventListener("unload", handleBeforeUnload);
