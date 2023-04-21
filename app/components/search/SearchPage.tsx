@@ -55,7 +55,7 @@ const SearchPage = () => {
   }, [filter])
 
   useEffect(() => {
-    if (filter) {
+    if (filter !== null && filter !== undefined && filter !== "") {
       // 클라이언트 사이드에서만 localStorage 사용
       if (typeof window !== "undefined") {
         localStorage.setItem("filter", filter);
