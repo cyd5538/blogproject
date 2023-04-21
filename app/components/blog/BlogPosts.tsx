@@ -1,5 +1,5 @@
 "use client"
-import { useMemo } from "react";
+
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { SinglePostType } from "../types/post";
@@ -17,6 +17,7 @@ import 'prismjs/themes/prism.css';
 import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
 import Link from "next/link";
 import BlogPostsSkeleton from "./BlogPostsSkeleton";
+import BlogShare from "./BlogShare";
 
 interface BlogPostsProps {
   currentUser : User | null;
@@ -65,6 +66,9 @@ const BlogPosts:React.FC<BlogPostsProps> = ({currentUser}) => {
             <div className="text-lg font-medium text-gray-900 dark:text-white">{data?.[0].user?.name}</div>
           </div>
         </div>
+      </div>
+      <div>
+        <BlogShare title={data?.[0].title}/>
       </div>
       <Comment 
         id={data?.[0].id}
