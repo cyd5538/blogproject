@@ -58,8 +58,8 @@ const SearchResult: React.FC<SearchResultProps> = ({
       </div>
       <ul className="mt-4">
         {tags?.map((tag) => (
-          <Link href={`/tags/?tag=${tag}`}>
-            <li key={tag} className="inline-block cursor-pointer bg-gray-200  text-gray-800 text-sm py-1 px-2 rounded-full mr-2">
+          <Link href={`/tags/?tag=${tag}`} key={tag}>
+            <li className="inline-block cursor-pointer bg-gray-200  text-gray-800 text-sm py-1 px-2 rounded-full mr-2">
               {tag}
             </li>
           </Link>
