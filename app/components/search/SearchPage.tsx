@@ -52,18 +52,7 @@ const SearchPage = () => {
     if (filter === "") {
       setHasData(true);
     }
-  }, [filter])
-
-  useEffect(() => {
-    if (filter !== null && filter !== undefined && filter !== "") {
-      // 클라이언트 사이드에서만 localStorage 사용
-      if (typeof localStorage !== 'undefined') {
-        localStorage.setItem("filter", filter);
-      }
-    }
-  }, [filter]);
-
-  
+  }, [filter])  
   return (
     <Container>
       <div className="flex justify-center mt-4">
