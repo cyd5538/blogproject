@@ -57,7 +57,7 @@ const SearchPage = () => {
   useEffect(() => {
     if (filter !== null && filter !== undefined && filter !== "") {
       // 클라이언트 사이드에서만 localStorage 사용
-      if (typeof window !== "undefined") {
+      if (typeof localStorage !== 'undefined') {
         localStorage.setItem("filter", filter);
       }
     }
@@ -67,7 +67,7 @@ const SearchPage = () => {
     // 브라우저가 닫힐 때 로컬 스토리지의 값을 삭제
     const handleBeforeUnload = () => {
       // 클라이언트 사이드에서만 localStorage 사용
-      if (typeof window !== "undefined") {
+      if (typeof localStorage !== 'undefined') {
         localStorage.removeItem("filter");
       }
     };
