@@ -37,7 +37,7 @@ const BlogPosts:React.FC<BlogPostsProps> = ({currentUser}) => {
   })
   if (error) return <div>error</div>
   if (isLoading) return <div><BlogPostsSkeleton /></div>
-  
+
   return (
     <div className="max-w-4xl mx-auto py-8 px-4 ">
       <h1 className="text-3xl font-bold mb-4 dark:text-white ">{data?.[0].title}</h1>
@@ -67,7 +67,7 @@ const BlogPosts:React.FC<BlogPostsProps> = ({currentUser}) => {
               <div className="text-lg font-medium text-gray-900 dark:text-white">{data?.[0].user?.name}</div>
             </div>
           </div>
-          <BlogShare title={data?.[0].title}/>
+          <BlogShare title={data?.[0].title} tags={data?.[0].tags}/>
         </div>
       </div>
       <Comment 
