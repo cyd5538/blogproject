@@ -31,7 +31,7 @@ const allPosts = async (filter: string) => {
 }
 
 const SearchPage = () => {
-  const [filter, setFilter] = useState(localStorage.getItem("filter") || "");
+  const [filter, setFilter] = useState("");
   const [hasData, setHasData] = useState(false);
   const queryClient = new QueryClient()
 
@@ -62,23 +62,7 @@ const SearchPage = () => {
       }
     }
   }, [filter]);
-  
-  useEffect(() => {
-    // 브라우저가 닫힐 때 로컬 스토리지의 값을 삭제
-    const handleBeforeUnload = () => {
-      // 클라이언트 사이드에서만 localStorage 사용
-      if (typeof localStorage !== 'undefined') {
-        localStorage.removeItem("filter");
-      }
-    };
-  
-    window.addEventListener("unload", handleBeforeUnload);
-  
-    // 컴포넌트 언마운트 시 이벤트 리스너 제거
-    return () => {
-      window.removeEventListener("unload", handleBeforeUnload);
-    };
-  }, []);
+
   
   return (
     <Container>
