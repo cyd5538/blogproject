@@ -85,7 +85,7 @@ const BlogPosts:React.FC<BlogPostsProps> = ({currentUser}) => {
         <div className='content w-full lg:w-3/4'>
           {data?.[0].content && (
             <ReactMarkdown
-                    children={data?.[0].content || ""} 
+                    children={data?.[0].content} 
                     remarkPlugins={[remarkGfm]}
                     className="post-content"
                     components={{
@@ -93,11 +93,12 @@ const BlogPosts:React.FC<BlogPostsProps> = ({currentUser}) => {
                             const match = /language-(\w+)/.exec(className || '')
                             return !inline && match ? (
                             <SyntaxHighlighter
-                                children={String(children).replace(/\n$/, '')}
-                                language={match[1]}
-                                PreTag="div"
-                                {...props}
-                            />
+                              language={match[1]}
+                              PreTag="div"
+                              {...props}
+                            >
+                              {String(children).replace(/\n$/, '')}
+                            </SyntaxHighlighter>
                             ) : (
                             <code className={className} {...props}>
                                 {children}
