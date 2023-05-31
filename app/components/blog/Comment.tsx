@@ -205,13 +205,13 @@ const Comment: React.FC<CommentProps> = ({ comment, currentUser, id }) => {
           </div>
         ))}
 
-        <button
+        {/* <button
           className="fixed bottom-2 right-2 lg:right-40 lg:bottom-16 px-2 py-2 bg-yellow-400 rounded-full"
           onClick={handleButtonClick}
           style={{ display: showButton ? "block" : "none" }}
         >
           <AiOutlineArrowUp size={20} />
-        </button>
+        </button> */}
       </div>
     </div>
   )

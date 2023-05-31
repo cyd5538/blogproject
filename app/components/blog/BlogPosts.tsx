@@ -1,5 +1,7 @@
 "use client"
 
+import React, { ReactNode } from 'react';
+
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { SinglePostType } from "../types/post";
@@ -7,9 +9,11 @@ import { useParams } from 'next/navigation';
 import Avatar from "../Avatar";
 import Comment from "./Comment";
 
-import Prism from 'prismjs';
-import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
-import { Viewer } from '@toast-ui/react-editor';
+import remarkGfm from 'remark-gfm'
+import ReactMarkdown from 'react-markdown'
+import {vscDarkPlus} from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+
 import { User } from "../types";
 
 import '@toast-ui/editor/dist/toastui-editor.css';
@@ -18,6 +22,7 @@ import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin
 import Link from "next/link";
 import BlogPostsSkeleton from "./BlogPostsSkeleton";
 import BlogShare from "./BlogShare";
+import { TOC } from './Blogtoc';
 
 interface BlogPostsProps {
   currentUser : User | null;
@@ -38,8 +43,33 @@ const BlogPosts:React.FC<BlogPostsProps> = ({currentUser}) => {
   if (error) return <div>error</div>
   if (isLoading) return <div><BlogPostsSkeleton /></div>
 
+  const flatten = (text: string, child: ReactNode): string => {
+    if (React.isValidElement(child)) {
+      return typeof child === "string"
+        ? text + child
+        : React.Children.toArray(child.props.children).reduce(flatten, text);
+    }
+    return text + child;
+  };
+  
+  type HeadingRendererProps = {
+    level: number;
+    children: ReactNode;
+  };
+
+  const HeadingRenderer = (props: HeadingRendererProps): JSX.Element => {
+    var children = React.Children.toArray(props.children);
+    var text = children.reduce(flatten, "");
+    var slug = text.toLowerCase().replace(/[!?\s]/g, "-");
+    return React.createElement(
+      `h${props.level}`,
+      { id: slug, className: "anchor" },
+      props.children
+    );
+  };
+
   return (
-    <div className="max-w-4xl mx-auto py-8 px-4 ">
+    <div className="max-w-5xl mx-auto py-8 px-4 ">
       <h1 className="text-3xl font-bold mb-4 dark:text-white ">{data?.[0].title}</h1>
       <ul className="mb-4">
         {data?.[0].tags?.map((tag) => (
@@ -51,12 +81,41 @@ const BlogPosts:React.FC<BlogPostsProps> = ({currentUser}) => {
         ))}
       </ul>
       <div className="bg-white p-4">
-      {data?.[0].content && (
-        <Viewer
-          initialValue={data?.[0].content || ''}
-          plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
-        />
-      )}
+      <div className='flex gap-4'>
+        <div className='content w-full lg:w-3/4'>
+          {data?.[0].content && (
+            <ReactMarkdown
+                    children={data?.[0].content || ""} 
+                    remarkPlugins={[remarkGfm]}
+                    className="post-content"
+                    components={{
+                        code({node, inline, className, children, ...props}) {
+                            const match = /language-(\w+)/.exec(className || '')
+                            return !inline && match ? (
+                            <SyntaxHighlighter
+                                children={String(children).replace(/\n$/, '')}
+                                language={match[1]}
+                                PreTag="div"
+                                {...props}
+                            />
+                            ) : (
+                            <code className={className} {...props}>
+                                {children}
+                            </code>
+                            )
+                        },
+                        h1: HeadingRenderer,
+                        h2: HeadingRenderer,
+                    }}
+                />
+              )}
+          </div>
+        <div className='w-40 hidden relative top-0 right-0 lg:block'>
+          <div className='fixed'>
+            <TOC selector=".content" />
+          </div>
+        </div>
+        </div>
       </div>
       <div className="flex items-center justify-between border-b-2 pb-2 pt-4">
         <div className="flex justify-between gap-2 w-full">
