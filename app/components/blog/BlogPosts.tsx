@@ -85,29 +85,29 @@ const BlogPosts: React.FC<BlogPostsProps> = ({ currentUser }) => {
           <div className='content w-full lg:w-3/4'>
 
             <ReactMarkdown
-              children={data?.[0].content || ""}
               remarkPlugins={[remarkGfm]}
               className="post-content"
               components={{
                 code({ node, inline, className, children, ...props }) {
-                  const match = /language-(\w+)/.exec(className || '')
+                  const match = /language-(\w+)/.exec(className || '');
                   return !inline && match ? (
                     <SyntaxHighlighter
                       language={match[1]}
                       PreTag="div"
-                    >
-                      {String(children).replace(/\n$/, '')}
-                    </SyntaxHighlighter>
+                      children={String(children).replace(/\n$/, '')}
+                    />
                   ) : (
                     <code className={className} {...props}>
                       {children}
                     </code>
-                  )
+                  );
                 },
                 h1: HeadingRenderer,
                 h2: HeadingRenderer,
               }}
-            />
+            >
+              {data?.[0].content || ""}
+            </ReactMarkdown>
 
           </div>
           <div className='w-40 hidden relative top-0 right-0 lg:block'>
