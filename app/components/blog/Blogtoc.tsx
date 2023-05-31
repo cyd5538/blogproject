@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useRef, useState } from "react";
-
+import {AiOutlineArrowUp, AiOutlineArrowDown} from 'react-icons/ai'
 type TOSType = {
   selector: string;
 };
@@ -10,6 +10,8 @@ export const TOC = ({ selector }: TOSType) => {
   const [currentHeadingID, setCurrentHeadingID] = useState<
     string | undefined
   >();
+  const [totbar, setTotBar] = useState(false)
+
 
   const listWrapperRef = useRef<HTMLDivElement>(null);
 
@@ -80,8 +82,9 @@ export const TOC = ({ selector }: TOSType) => {
     >
 
       <div
-        className={`z-50 top-[103%] p-2 inset-x-0 bg-zinc-100 drop-shadow rounded-b-2xl overflow-hidden transition-[height] duration-200 `}
+        className={`${totbar ? "h-10" : "h-auto"} z-50 top-[103%]  p-2 pb-8 inset-x-0 bg-zinc-100 drop-shadow rounded-b-2xl overflow-hidden transition-[height] duration-700 `}
       >
+        {totbar && (<div onClick={() => setTotBar(false)} className="absolute right-2 cursor-pointer top-2"><AiOutlineArrowDown size={20}/></div>)}
         <div ref={listWrapperRef}>
           {headings.map((heading) => {
             const tagLevel = heading.tagName.match(/(\d+)/)?.[0] || "1";
@@ -91,7 +94,7 @@ export const TOC = ({ selector }: TOSType) => {
                 style={{ paddingLeft: +tagLevel * 7 + "px", 
                 color : currentHeadingID ===  heading.dataset.id ? 'purple' : 'black',
                 fontWeight : currentHeadingID ===  heading.dataset.id ? 'bold' : 'normal'}}
-
+          
                 className="mb-2 cursor-pointer"
                 title={heading.innerHTML}
                 data-id={heading.dataset.id}
@@ -108,6 +111,7 @@ export const TOC = ({ selector }: TOSType) => {
             );
           })}
         </div>
+        {!totbar && (<div onClick={() => setTotBar(true)} className="absolute right-2 cursor-pointer"><AiOutlineArrowUp size={20}/></div>)}
       </div>
     </div>
   );
