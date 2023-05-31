@@ -95,7 +95,6 @@ const BlogPosts: React.FC<BlogPostsProps> = ({ currentUser }) => {
                     <SyntaxHighlighter
                       language={match[1]}
                       PreTag="div"
-                      {...props}
                     >
                       {String(children).replace(/\n$/, '')}
                     </SyntaxHighlighter>
