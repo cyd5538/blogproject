@@ -109,6 +109,7 @@ const BlogPosts: React.FC<BlogPostsProps> = ({ currentUser }) => {
               {data?.[0].content || ""}
             </ReactMarkdown>
 
+
           </div>
           <div className='w-40 hidden relative top-0 right-0 lg:block'>
             <div className='fixed'>
