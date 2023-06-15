@@ -26,6 +26,7 @@ https://jscotemaster.vercel.app/
 * 태블릿, 모바일도 가능한 반응형 웹 디자인
 * 로딩바 대신 스켈레톤 구현
 * 블로그 카톡공유 기능
+* toc(Table Of Contents) 목차 기능 
 ## 📖 페이지 소개
 ### 메인
 ![image](https://user-images.githubusercontent.com/91642972/235447259-5cfff96a-71ae-4d67-96f0-8101ba019f9e.png)
