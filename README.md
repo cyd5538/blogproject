@@ -31,6 +31,6 @@ https://jscotemaster.vercel.app/
 ### 메인
 ![image](https://user-images.githubusercontent.com/91642972/235447259-5cfff96a-71ae-4d67-96f0-8101ba019f9e.png)
 ### 블로그 포스트 페이지
-![image](https://user-images.githubusercontent.com/91642972/235447386-b5aaba08-06d4-461e-bb6c-1a1f330fb800.png)
+![image](https://github.com/cyd5538/blogproject/assets/91642972/96f67564-318e-4dbc-a44d-e61d73c3a3f3)
 ### 글 쓰기 페이지
 ![image](https://user-images.githubusercontent.com/91642972/235447479-deb5a651-ce14-4048-a93c-881ad49a7885.png)
